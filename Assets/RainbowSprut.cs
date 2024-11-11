@@ -54,7 +54,7 @@ public class RainbowSprut : Enemy
         StartPosition = transform.position;
         fpc = FindObjectOfType<fristPersonControler>();
         //   Instantiate(Particles, transform.position, Quaternion.identity);
-        hideplayer ??= FindFirstObjectByType<MultyTransform>();
+      if(FindObjectOfType<MultyTransform>())  hideplayer = FindObjectOfType<MultyTransform>();
     }
     IEnumerator Shoot()
     {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Unity.Mathematics.math;
-using static Unity.VisualScripting.Member;
 public enum GunPerck
 {
     none,money
@@ -45,7 +44,7 @@ public class fristPersonControler : MonoBehaviour
     public Text InteractData;
     public Text TimerCounter;
     public AudioSource sourece;
-    public AudioSource �����;
+    public AudioSource взмах;
     public GameObject FlyLink;
     public GameObject JumpLink;
     float timer;
@@ -54,7 +53,9 @@ public class fristPersonControler : MonoBehaviour
     [SerializeField] MultyTransform multyTransform;
     float fmod2(float a, float b)
     {
-        float c = frac(abs(a / b)) * abs(b);
+          float c = frac(abs(a / b)) * abs(b);
+
+        //float c = 0;
         if (a < 0)
         {
             c = -c + b;
@@ -81,6 +82,7 @@ public class fristPersonControler : MonoBehaviour
                 Guns = guns.ToArray();
             }
         }
+        InvokeRepeating("RandomEnemieEnder",15,15);
         InteresSet(21);
     }
     IEnumerator Shoot()
@@ -172,14 +174,23 @@ public class fristPersonControler : MonoBehaviour
         GameOwer.SetActive(false);
 
     }
+    public void RandomEnemieEnder()
+    {
+        Enemy[] en = FindObjectsOfType<Enemy>();
+        Enemy cur = en[UnityEngine.Random.Range(0, en.Length)];
+        cur.transform.position = transform.position - (transform.forward * 20);
+        cur.GetComponent<MultyObject>().W_Position = FindObjectOfType<MultyTransform>().W_Position;
+        cur.GetComponent<MultyObject>().H_Position = FindObjectOfType<MultyTransform>().H_Position;
+    }
     // Update is called once per frame
     void Update()
     {
+
         TimerCounter.text = "" + (int)(timer / 60) + ":" + System.Math.Round((timer % 60), 1);
         current = Guns[currentGun];
         AmmoColorText(current);
         PositionInfo.text = "W : " + Math.Round(multyTransform.W_Position,1);
-        if (FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length<=0)
+        if (FindObjectsOfType<Enemy>().Length<=0)
         {
             Vin.text = "All Enemye Destroyed";
         }
@@ -243,11 +254,11 @@ public class fristPersonControler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space) && Interact)
         {
-            �����.Play();
+            взмах.Play();
         }
         if (Input.GetKey(KeyCode.Space) && Interact)
         {
-            rb.AddForce(Vector3.up * (50 * Time.deltaTime), ForceMode.Impulse);
+            rb.AddForce(Vector3.up * (50 * Time.deltaTime*VarSave.GetInt("бонус полёта") ==1?3:1), ForceMode.Impulse);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

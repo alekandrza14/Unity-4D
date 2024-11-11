@@ -36,7 +36,7 @@ public class EngeComunist : Enemy
                 Instantiate(Particles2, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
-           if(!player) player = FindFirstObjectByType<fristPersonControler>();
+           if(!player) player = FindObjectOfType<fristPersonControler>();
             Instantiate(Particles, transform.position, Quaternion.identity);
         }
     }
@@ -53,7 +53,7 @@ public class EngeComunist : Enemy
         StartPosition = transform.position;
         fpc = FindObjectOfType<fristPersonControler>();
         //   Instantiate(Particles, transform.position, Quaternion.identity);
-        hideplayer ??= FindFirstObjectByType<MultyTransform>();
+      if(FindObjectOfType<MultyTransform>())  hideplayer = FindObjectOfType<MultyTransform>();
         InvokeRepeating("Telep", 2*60,20);
     }
     IEnumerator Shoot()

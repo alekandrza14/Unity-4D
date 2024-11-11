@@ -40,7 +40,7 @@ public class Bird : Enemy
     void Start()
     {
      //   Instantiate(Particles, transform.position, Quaternion.identity);
-        hideplayer ??= FindFirstObjectByType<MultyTransform>();
+      if(FindObjectOfType<MultyTransform>())  hideplayer = FindObjectOfType<MultyTransform>();
     }
 
     

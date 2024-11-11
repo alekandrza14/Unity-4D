@@ -17,7 +17,7 @@ public class GrayTiger : Enemy
     public GameObject Prise;
     public GameObject Bullet;
     public GameObject Mob; 
-    List<GameObject> Mobs =new();
+    List<GameObject> Mobs =new List<GameObject>();
     Vector3 StartPosition;
     bool reload;
     bool reload2;
@@ -56,7 +56,7 @@ public class GrayTiger : Enemy
         StartPosition = transform.position;
         fpc = FindObjectOfType<fristPersonControler>();
         //   Instantiate(Particles, transform.position, Quaternion.identity);
-        hideplayer ??= FindFirstObjectByType<MultyTransform>();
+      if(FindObjectOfType<MultyTransform>())  hideplayer = FindObjectOfType<MultyTransform>();
     }
     IEnumerator Shoot()
     {
@@ -71,7 +71,7 @@ public class GrayTiger : Enemy
         reload2 = true;
         body.linearVelocity = Vector3.zero;
         MultyObject mo = Instantiate(Particles3, transform.position, Quaternion.identity).GetComponent<MultyObject>();
-        mo.W_Position = FindAnyObjectByType<fristPersonControler>().GetComponent<MultyObject>().W_Position;
+        mo.W_Position = FindObjectOfType<fristPersonControler>().GetComponent<MultyObject>().W_Position;
         transform.position = StartPosition;
         yield return new WaitForSeconds(8);
         reload2 = false;
