@@ -258,6 +258,7 @@ public class fristPersonControler : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space) && Interact)
         {
+            Debug.Log("x"+(VarSave.GetInt("бонус полёта") == 1 ? 3 : 1));
             rb.AddForce(Vector3.up * (50 * Time.deltaTime*VarSave.GetInt("бонус полёта") ==1?3:1), ForceMode.Impulse);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
