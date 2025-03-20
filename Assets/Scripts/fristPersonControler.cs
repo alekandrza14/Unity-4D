@@ -343,7 +343,7 @@ public class fristPersonControler : MonoBehaviour
 
         if (GameOwer.activeSelf == false)
         {
-            if ((rb.linearVelocity.x + rb.linearVelocity.z) <= 1) rb.MovePosition(((transform.right * Input.GetAxisRaw("Horizontal") + transform.forward * Input.GetAxisRaw("Vertical")) / 6) + transform.position);
+            if ((rb.linearVelocity.x + rb.linearVelocity.z) <= 1) rb.MovePosition((((transform.right * Input.GetAxisRaw("Horizontal") + transform.forward * Input.GetAxisRaw("Vertical")) / 6) * (VarSave.GetInt("бонус скорости") == 1 ? 3 : 1)) + transform.position);
             multyTransform.W_Position += Input.GetAxisRaw("Vertical1") * Time.deltaTime * 3;
             multyTransform.H_Position += Input.GetAxisRaw("Horizontal1") * Time.deltaTime * 3;
             if (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical") + Input.GetAxisRaw("Vertical1") + Input.GetAxisRaw("Horizontal1")!=0)
