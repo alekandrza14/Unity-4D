@@ -62,7 +62,7 @@ public class GrayTiger : Enemy
     {
         reload = true;
         Instantiate(Bullet, fpc.transform.position, Quaternion.LookRotation(-(fpc.transform.position - transform.position)));
-       if(Mobs.Count<5) Mobs.Add(Instantiate(Mob, fpc.transform.position, Quaternion.LookRotation(-(fpc.transform.position - transform.position))));
+       if(Mobs.Count<5) Mobs.Add(Instantiate(Mob, fpc.transform.position-(fpc.transform.forward*40), Quaternion.LookRotation(-(fpc.transform.position - transform.position))));
         yield return new WaitForSeconds(1f);
         reload = false;
     }

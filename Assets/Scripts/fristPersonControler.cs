@@ -21,6 +21,7 @@ public class Gun
     public float timeout;
     public float ammo = 84.2f;
     public float MaxAmmo = 84.2f;
+    public float отдача = 1f;
     public float res = 0.6f;
     public Text ammoText;
     public GunPerck perck;
@@ -47,6 +48,7 @@ public class fristPersonControler : MonoBehaviour
     public AudioSource взмах;
     public GameObject FlyLink;
     public GameObject JumpLink;
+    public GameObject NextLevelLink;
     float timer;
     bool Interact;
     bool reload;
@@ -101,9 +103,9 @@ public class fristPersonControler : MonoBehaviour
 
                 hands.ammo = hands.MaxAmmo * 2;
             }
-        rb.AddForce(-3 * Eye, ForceMode.Impulse);
-        if (hands.ammo < hands.MaxAmmo) yield return new WaitForSeconds(hands.timeout);
-        if (hands.ammo > hands.MaxAmmo) yield return new WaitForSeconds(hands.timeout / 2);
+        rb.AddForce(-3 * Eye* hands.отдача, ForceMode.Impulse);
+        if (hands.ammo < hands.MaxAmmo) yield return new WaitForSeconds((hands.timeout/(VarSave.GetInt("бонус скорости стельбы") == 1 ? 3 : 1)));
+        if (hands.ammo > hands.MaxAmmo) yield return new WaitForSeconds((hands.timeout / (VarSave.GetInt("бонус скорости стельбы") == 1 ? 3 : 1)) / 2);
         reload = false;
     }
 
@@ -193,6 +195,7 @@ public class fristPersonControler : MonoBehaviour
         if (FindObjectsOfType<Enemy>().Length<=0)
         {
             Vin.text = "All Enemye Destroyed";
+            NextLevelLink.SetActive(true);
         }
         else
         {
@@ -258,8 +261,8 @@ public class fristPersonControler : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space) && Interact)
         {
-            Debug.Log("x"+(VarSave.GetInt("бонус полёта") == 1 ? 3 : 1));
-            rb.AddForce(Vector3.up * (50 * Time.deltaTime*VarSave.GetInt("бонус полёта") ==1?3:1), ForceMode.Impulse);
+            
+            rb.AddForce(Vector3.up * (50 * Time.deltaTime*(VarSave.GetInt("бонус полёта") ==1?3:1)), ForceMode.Impulse);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
